@@ -20,3 +20,24 @@
   max-width: fit-content;
   padding: 0.5rem;
 }
+
+.clickable{
+  cursor: pointer;
+}
+
+.profile-container {
+  max-width: 50rem;
+}
+
+.profile-desc-container{
+  text-align: center;
+}
+
+.profile-pic-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile-pic{
+  max-width: 50%;
+}
