@@ -18,3 +18,5 @@ Construye la aplicación para producción en el directiorio `build`.
 v1.0:
 
 Semana 1. Aplicación estática, sin estados ni interacciones de usuario.
+
+Semana 2. Se adicionaron estados y props a la aplicación
