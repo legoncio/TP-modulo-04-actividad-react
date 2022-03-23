@@ -19,4 +19,6 @@ v1.0:
 
 Semana 1. Aplicación estática, sin estados ni interacciones de usuario.
 
+v2.0:
+
 Semana 2. Se adicionaron estados y props a la aplicación
