@@ -22,3 +22,7 @@ Semana 1. Aplicación estática, sin estados ni interacciones de usuario.
 v2.0:
 
 Semana 2. Se adicionaron estados y props a la aplicación
+
+v3.0:
+
+Semana 3. Adición de componente login y consumo de APIs para inicio de sesión y carga de posts.

@@ -25,6 +25,10 @@
   cursor: pointer;
 }
 
+.login-form{
+  max-width: 25rem;
+}
+
 .profile-container {
   max-width: 50rem;
 }
