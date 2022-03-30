@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import { useState, useEffect}  from 'react';
 import axios from 'axios';
 
 //Components
@@ -12,30 +12,23 @@ import Login from './components/Login';
 
 import { profile } from './data/profile';
 
-class App extends React.Component
+function App()
 {
-  constructor(props){
-    super(props)
-    this.state = {
-      search: "",
-      posts: [],
-      section: "posts",
-      isLoading: true,
-      loggedIn: false
-    }
-  }
+  const [search, setSearch] = useState("")
+  const [posts, setPosts] = useState([])
+  const [section, setSection] = useState("posts")
+  const [isLoading, setIsLoading] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  componentDidMount(){
+  useEffect(() => {
     const token = localStorage.getItem('token')
     if(token){
-      this.setState({
-        loggedIn: true
-      })
-      this.loadPosts()
+      setLoggedIn(true)
+      loadPosts()
     }
-  }
+  }, [])
 
-  loadPosts = () => {
+  function loadPosts() {
     const token = localStorage.getItem('token')
     axios
       .get(
@@ -49,54 +42,42 @@ class App extends React.Component
       .then(res => {
         const resCode = res.status
         if(resCode === 200){
-          this.setState({
-            posts: res.data,
-            isLoading: false
-          })
+          setPosts(res.data)
+          setIsLoading(false)
         }
       })
       .catch(err => {
         console.log(err)
         if(err.response.status === 401){
           localStorage.removeItem('token')
-          this.setState({
-            loggedIn: false
-          })
+          setLoggedIn(false)
         }
       })
   }
 
-  onLoginComplete = () => {
-    this.setState({
-      loggedIn: true
-    })
-    this.loadPosts()
+  function onLoginComplete() {
+    setLoggedIn(true)
+    loadPosts()
   }
 
-  onSectionChange = (section) => {
-    this.setState({
-      section
-    })
+  function onSectionChange(section) {
+    setSection(section)
   }
 
-  onSearchChange = (text) => {
-    this.setState({
-      search: text
-    })
+  function onSearchChange(text) {
+    setSearch(text)
   }
 
-  render (){
-
-    if (this.state.loggedIn){
+    if (loggedIn){
       return(
         <div className="App">
           <header>
-            <Navbar onSectionChange={this.onSectionChange}/>
-            <Searchbar onSearchChange={this.onSearchChange}/>
+            <Navbar onSectionChange={onSectionChange}/>
+            <Searchbar onSearchChange={onSearchChange}/>
           </header>
         { 
-            !this.state.isLoading ?
-              (this.state.section === "posts" ? <PostList posts={this.state.posts} searchCriteria={this.state.search}/> : <Profile profile={profile}/>)
+            !isLoading ?
+              (section === "posts" ? <PostList posts={posts} searchCriteria={search}/> : <Profile profile={profile}/>)
               :
               <LoadingApp />
           }
@@ -104,10 +85,9 @@ class App extends React.Component
       );  
     }else{
       return(
-        <Login onLoginComplete={this.onLoginComplete}/>
+        <Login onLoginComplete={onLoginComplete}/>
       )
     }
-  }
 }
 
 export default App;

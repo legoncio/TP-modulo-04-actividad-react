@@ -1,6 +1,6 @@
 import Post from "./Post";
 
-function CardGroup(props) {
+function PostList(props) {
     if (props.posts.length > 0){
         return (
             <div className="container-xl my-4">
@@ -31,4 +31,4 @@ function CardGroup(props) {
     }
 }
 
-export default CardGroup
+export default PostList

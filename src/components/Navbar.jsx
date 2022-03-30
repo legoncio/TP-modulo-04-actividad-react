@@ -1,34 +1,30 @@
-import React from "react"
+function Navbar(props) {
 
-class Navbar extends React.Component {
-
-  onLogoClick = () => {
-    this.props.onSectionChange("posts")
+  function onLogoClick() {
+    props.onSectionChange("posts")
   }
 
-  onProfileClick = () => {
-    this.props.onSectionChange("pofile")
+  function onProfileClick() {
+    props.onSectionChange("pofile")
   }
 
-  render(){
-    return (
+  return (
     <nav className="navbar navbar-light bg-light">
       <div className="container-fluid">
         <span 
           className="navbar-brand mb-0 h1 clickable"
-          onClick={this.onLogoClick}
+          onClick={onLogoClick}
         >
           <i className="bi bi-lightning-charge-fill mx-1"></i>
           three pics
         </span>
         <i 
           className="bi bi-person-circle fs-3 clickable"
-          onClick={this.onProfileClick}
+          onClick={onProfileClick}
         ></i>
       </div>
     </nav>
-    )
-  }
+  )
 }
 
 export default Navbar
