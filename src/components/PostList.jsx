@@ -7,10 +7,11 @@ function PostList(props) {
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 g-4 mb-5">
                     {props.posts
                         .filter(post => 
-                            post.text.toLowerCase().includes(props.searchCriteria.toLowerCase()) || post.author.username.includes(props.searchCriteria.toLowerCase()))
+                            post.text.toLowerCase().includes(props.searchCriteria.toLowerCase()) || post.author.username.toLowerCase().includes(props.searchCriteria.toLowerCase()))
                         .map(post => 
                         <Post 
                             key={post.id}
+                            id={post.id}
                             user={post.author.username} 
                             description={post.text}
                             createdAt={post.createdAt} 

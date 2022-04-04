@@ -1,11 +1,35 @@
 import { useState } from "react"
+import axios from "axios"
 
 function Card(props) {
 
     const [likes, setLikes] = useState(props.likes)
 
     function handleLike() {
-        setLikes((prev) => prev + 1)
+        const token = localStorage.getItem('token')
+        const url = `https://three-points.herokuapp.com/api/posts/${props.id}/like`
+        axios
+            .post(
+                url,{},
+                {
+                    headers:{
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            )
+            .then(res => {
+                const resCode = res.status
+                if(resCode === 204){
+                    setLikes((prev) => prev + 1)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                if(err.response.status === 401){
+                    localStorage.removeItem('token')
+                    console.log("like error")
+                }
+            })
     }
 
     return (

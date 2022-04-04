@@ -1,5 +1,6 @@
 import './App.css';
 import { useState, useEffect}  from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom'
 import axios from 'axios';
 
 //Components
@@ -16,7 +17,6 @@ function App()
 {
   const [search, setSearch] = useState("")
   const [posts, setPosts] = useState([])
-  const [section, setSection] = useState("posts")
   const [isLoading, setIsLoading] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -27,6 +27,12 @@ function App()
       loadPosts()
     }
   }, [])
+
+  useEffect(() => {
+    if(!loggedIn){
+      <Navigate to='/login'/>
+    }
+  }, [loggedIn])
 
   function loadPosts() {
     const token = localStorage.getItem('token')
@@ -60,34 +66,39 @@ function App()
     loadPosts()
   }
 
-  function onSectionChange(section) {
-    setSection(section)
+  function onLogoutComplete(){
+    localStorage.removeItem('token')
+    setLoggedIn(false)
   }
 
   function onSearchChange(text) {
     setSearch(text)
   }
 
-    if (loggedIn){
-      return(
-        <div className="App">
-          <header>
-            <Navbar onSectionChange={onSectionChange}/>
-            <Searchbar onSearchChange={onSearchChange}/>
-          </header>
-        { 
-            !isLoading ?
-              (section === "posts" ? <PostList posts={posts} searchCriteria={search}/> : <Profile profile={profile}/>)
-              :
-              <LoadingApp />
+  if(loggedIn){
+    return(
+      <div className="App">
+        <header>
+          <Navbar />
+          <Searchbar onSearchChange={onSearchChange}/>
+          {isLoading ?
+            <LoadingApp />
+          :
+            <Routes>
+              <Route exact path='/' element={<PostList posts={posts} searchCriteria={search}/>}/>
+              <Route path='/profile' element={<Profile profile={profile} onLogoutComplete={onLogoutComplete}/>}/>
+              {!loggedIn && <Route path='/login' element= {<Login onLoginComplete={onLoginComplete}/>}/>}
+              <Route path='*' element={<Navigate to='/'/>} />
+            </Routes>
           }
-        </div>
-      );  
-    }else{
-      return(
-        <Login onLoginComplete={onLoginComplete}/>
-      )
-    }
+        </header>
+      </div>
+    );  
+  }else{
+    return(
+      <Login onLoginComplete={onLoginComplete} />
+    )
+  }
 }
 
 export default App;

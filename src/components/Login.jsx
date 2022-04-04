@@ -27,6 +27,7 @@ function Login(props){
                 .then(res => {
                     if(res.status === 200){
                         localStorage.setItem('token', res.data.token)
+                        console.log(localStorage.getItem('token'))
                         setError("")
                         onLoginComplete()
                     }else{

@@ -37,7 +37,7 @@
   text-align: center;
 }
 
-.profile-pic-container{
+.centered-container{
   display: flex;
   justify-content: space-around;
 }
