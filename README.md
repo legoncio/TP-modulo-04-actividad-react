@@ -26,3 +26,7 @@ Semana 2. Se adicionaron estados y props a la aplicación
 v3.0:
 
 Semana 3. Adición de componente login y consumo de APIs para inicio de sesión y carga de posts.
+
+v4.0:
+
+Semana 4. Adición de React router para navegación. Consumo de API para likes en los posts. Funcionalidad de logout en el componente "Profile"
